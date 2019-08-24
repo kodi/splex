@@ -1,6 +1,6 @@
 {
   "name": "splex",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Multi File Tail",
   "main": "cli.js",
   "scripts": {
