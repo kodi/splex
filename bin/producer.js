@@ -1,5 +1,5 @@
 const fs = require('fs');
-const faker = require('faker'); 3 w3
+const faker = require('faker');
 
 const NUM_LOGS = 4;
 const UPDATE_INTERVAL = 500;
