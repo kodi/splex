@@ -24,8 +24,6 @@
     "faker": "^4.1.0",
     "highland": "^2.13.5",
     "meow": "^5.0.0",
-    "tail-file": "^1.4.13",
-    "term-size": "^2.1.0",
-    "terminal-size": "^1.0.2"
-  }
+    "tail": "^2.0.3"
+    }
 }

@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-const Tail = require('tail-file');
 const chalk = require('chalk');
 const meow = require('meow');
 
+
+const Tail = require('tail').Tail;
 
 // CLI Stuff
 const cli = meow(`
@@ -41,6 +42,10 @@ filenames.forEach((f, idx) => {
 });
 
 
+console.log('-------------------');
+console.log('   Starting SpleX  ');
+console.log('------ 🦈🦈 ------');
+
 filenames.forEach((f) => {
     listeners[f] = new Tail(f);
     listeners[f].on('line', (l) => {
@@ -51,18 +56,19 @@ filenames.forEach((f) => {
             console.log(chalk[color](`> ${f}: `) + chalk.green('| ') +  chalk.white(`${l}`));
             console.log(chalk.green('-'.repeat(termSize)));
         } else {
-
+            
             console.log(chalk[color](`> ${f}: `) +  chalk.white(`${l}`));
         }
     });
 
-    listeners[f].start();
+
+    
+    
+    listeners[f].on('eof', pos => console.log("Catched up to the last line") );
+    listeners[f].on('error', err => console.log('Error: ', err));
+    listeners[f].on('ready', fd => console.log('Ready to start on: ', fd));
+    console.log(chalk.blue('Setting up listener for: ') + f);
 });
-
-
-console.log('-------------------');
-console.log('   Starting SpleX  ');
-console.log('------ 🦈🦈 ------');
 
 // wait in loop, until someone presses ctrl-c
 x = setInterval(() => {
