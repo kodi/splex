@@ -1,21 +1,21 @@
 {
-  "name": "sharky",
-  "version": "1.0.0",
+  "name": "splex",
+  "version": "0.1.0",
   "description": "Multi File Tail",
-  "main": "index.js",
+  "main": "cli.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kodi/sharky.git"
+    "url": "git+https://github.com/kodi/splex.git"
   },
   "author": "Dragan Bajcic <dragan.bajcic@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kodi/sharky/issues"
+    "url": "https://github.com/kodi/splex/issues"
   },
-  "homepage": "https://github.com/kodi/sharky#readme",
+  "homepage": "https://github.com/kodi/splex#readme",
   "dependencies": {
     "chalk": "^2.4.2",
     "faker": "^4.1.0",
