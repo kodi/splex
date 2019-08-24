@@ -18,7 +18,16 @@ let int = setInterval(() => {
     let word = faker.random.word();
     console.log(word);
 
-    const line = `${uuid}\t${number}\t${word}\n`;
+    let line = `${uuid}\t${number}\t${word}\n`;
+
+    if (counter % 5 === 0) {
+
+        let lineNew = Math.random().toString(36).slice(-95) + "\n";
+        console.log(lineNew);
+        line = lineNew;
+    }
+
+
     fs.appendFileSync(`logs/log-${mdl}.log`, line);
 
     console.log(`wrote : ${line}`);
