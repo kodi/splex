@@ -4,7 +4,7 @@ const faker = require('faker');
 const NUM_LOGS = 4;
 const UPDATE_INTERVAL = 500;
 
-const counter = 0;
+let counter = 0;
 let int = setInterval(() => {
 
     let mdl = counter % NUM_LOGS;
@@ -18,7 +18,7 @@ let int = setInterval(() => {
     let word = faker.random.word();
     console.log(word);
 
-    const line = `${uuid}\t${number}${word}\n`;
+    const line = `${uuid}\t${number}\t${word}\n`;
     fs.appendFileSync(`logs/log-${mdl}.log`, line);
 
     console.log(`wrote : ${line}`);
