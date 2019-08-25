@@ -27,7 +27,7 @@ Example commands
 splex log/path/log.1 log/path/log.2
 ```
 
-To specify custom colors
+To specify custom colors, eg. alternating yellow and blue:
 ```
 splex -t -c yellow,blue logs/log-0.log logs/log-1.log logs/log-2.log logs/log-3.log
 ```
