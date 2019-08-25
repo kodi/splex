@@ -1,6 +1,7 @@
 # Splex
 
 Need to watch 4 log files?
+
 Tired of doing `tail -f log.file` in 4 terminal panels/tabs/windows?
 
 Enter **Splex**
