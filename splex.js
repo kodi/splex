@@ -28,6 +28,20 @@ Options:
     }
   }
 );
+
+const optionsMap = {
+    t:1,
+    c:2,
+    m:4
+}
+
+let optionsSum = 0;
+['t', 'c', 'm'].forEach((flag) => {
+  if(cli.flags[flag] === true || (typeof cli.flags[flag] === 'string' && cli.flags[flag] !== '')) {
+    optionsSum += optionsMap[flag];
+  }
+});
+
 // sanity checks
 if (cli.input.length === 0) {
   console.log(chalk.red("Error:"), "No files specified.");
@@ -37,20 +51,24 @@ if (cli.input.length === 0) {
   );
   cli.showHelp(2);
 }
+
 const termSize = process.stdout.columns;
 let filenames = cli.input;
 let listeners = {};
 let colors = ["red", "green", "blue", "yellow", "magenta", "cyan"];
+
 // provide custom colors
 if (cli.flags.c) {
   colors = cli.flags.c.split(",");
 }
+
 // create index of fileName -> color
 let colorIdx = {};
 filenames.forEach((f, idx) => {
   let cIdx = idx % colors.length;
   colorIdx[f] = colors[cIdx];
 });
+
 // -------- START SPLEX -----------
 console.log("-------------------");
 console.log("  Starting SpleX   ");
@@ -60,22 +78,68 @@ filenames.forEach(f => {
   listeners[f] = new Tail(f);
   listeners[f].on("line", l => {
     let color = colorIdx[f];
-    if (cli.flags.t && !cli.flags.m) {
-      console.log(
-        chalk[color](`> ${f}: `) + chalk.green("| ") + chalk.white(`${l}`)
-      );
-      console.log(chalk.green("-".repeat(termSize)));
-    } else if (cli.flags.t && cli.flags.m) {
-      console.log(`> ${f}: | ${l}`);
-      console.log("-".repeat(termSize));
-    } else if (cli.flags.m) {
-      console.log(`> ${f}: ${l}`);
-    } else {
-      console.log(chalk[color](`> ${f}: `) + chalk.white(`${l}`));
-    }
+    switch(optionsSum) {
+      case 1:
+        //tables
+        colorPrintTable(color, f, l);
+        break;
+      case 2:  
+        // custom colors provided, print default  
+        colorPrint(color, f, l);
+        break;
+      case 3:
+        // custom colors + table
+        colorPrintTable(color, f, l);
+        break;
+      case 4:
+        // momno - no tables
+        monoPrint(f, l;
+        break;
+      case 5:
+        // mono - with tables
+        monoPrintTable(f, l);
+        break;
+      case 6:
+        //mono + custom colors, invalid combination,
+        //just print mono
+        monoPrint(f, l);
+        break;
+      case 7: 
+        // mono + table + custom colors
+        // invalid combination, print mono table 
+        monoPrintTable(f, l);
+        break;
+      default:
+        colorPrint(color, f, l);
+        break;
+    }    
   });
+
   listeners[f].on("error", err => console.log("Error: ", err));
   console.log(chalk[colorIdx[f]]("Setting up listener for: ") + f);
 });
+
+// color print line, with table flag for tagle format
+let colorPrint = function(color, file, line) {
+  console.log(chalk[color](`> ${file}: `) + chalk.white(`${line}`));
+}
+
+let colorPrintTable = function(color, file, line) {
+  console.log(chalk[color](`> ${file}: `) + chalk.green("| ") + chalk.white(`${line}`));
+  console.log(chalk.green("-".repeat(termSize)));
+}
+
+// mono print line with flag for table format
+let monoPrint = function(file, line) {
+  console.log(`> ${file}: ${line}`);
+}
+
+// mono print line with flag for table format
+let monoPrintTable = function(file, line) {
+  console.log(`> ${file}: | ${line}`);
+  console.log("-".repeat(termSize));
+}
+
+
 // wait in loop, until someone presses ctrl-c
 x = setInterval(() => {}, 1000);
