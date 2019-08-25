@@ -1,21 +1,15 @@
 #!/usr/bin/env node
 const chalk = require('chalk');
 const meow = require('meow');
-
-
 const Tail = require('tail').Tail;
 
 // CLI Stuff
 const cli = meow(`
+------------------
 
- _____        _           
-/ ____|      | |          
-| (___  _ __ | | _____  __
-\\___  \\| '_ \\| |/ _ \\ \\/ /
- ____) | |_) | |  __/>  < 
-|_____/| .__/|_|\\___/_/\\_\\
-       | |                
-       |_|  
+S P L E X
+
+------------------
 
 Usage: 
 $ splex [options] file1 file 2 fileX
@@ -50,7 +44,6 @@ let colors = [
 ]
 
 
-
 // create index of fileName -> color
 let colorIdx = {};
 filenames.forEach((f, idx) => {
@@ -68,24 +61,17 @@ filenames.forEach((f) => {
     listeners[f].on('line', (l) => {
         let color = colorIdx[f];
         if(cli.flags.t) {
-            
-            const logString = `> ${f}: | ${l} `;
             console.log(chalk[color](`> ${f}: `) + chalk.green('| ') +  chalk.white(`${l}`));
             console.log(chalk.green('-'.repeat(termSize)));
         } else {
-            
             console.log(chalk[color](`> ${f}: `) +  chalk.white(`${l}`));
         }
     });
 
-
-    
-    listeners[f].on('eof', pos => console.log("Catched up to the last line") );
     listeners[f].on('error', err => console.log('Error: ', err));
-    listeners[f].on('ready', fd => console.log('Ready to start on: ', fd));
     console.log(chalk[colorIdx[f]]('Setting up listener for: ') + f);
 });
 
 // wait in loop, until someone presses ctrl-c
 x = setInterval(() => {
-}, 1500);
+}, 1000);
