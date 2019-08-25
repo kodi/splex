@@ -52,3 +52,9 @@ splex -t -c yellow,blue logs/log-0.log logs/log-1.log logs/log-2.log logs/log-3.
 
 ![custom colors](img/custom_colors.png)
 
+
+Monochrome mode is activated by adding `-m`  flag:
+
+```
+splex -tm logs/log-0.log logs/log-1.log logs/log-2.log
+```

@@ -2,7 +2,7 @@ const fs = require('fs');
 const faker = require('faker');
 
 const NUM_LOGS = 4;
-const UPDATE_INTERVAL = 500;
+const UPDATE_INTERVAL = 50;
 
 let counter = 0;
 let int = setInterval(() => {

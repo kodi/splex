@@ -15,9 +15,9 @@ Usage:
 $ splex [options] file1 file 2 fileX
 
 Options:
---table -t      print as table rows
-
---colors -c     specify custom colors as: color1, color2
+--table -t        print as table rows
+--colors -c       specify custom colors as: color1, color2
+--monochrome -m   monochrome mode
 `, {
     flags: {
         table: {
@@ -27,7 +27,11 @@ Options:
         colors: {
             type: 'string',
             alias: 'c'
-        },   
+        },
+        monochrome: {
+            type: 'boolean',
+            alias: 'm'
+        }   
     }
 });
 
@@ -69,9 +73,14 @@ filenames.forEach((f) => {
     listeners[f] = new Tail(f);
     listeners[f].on('line', (l) => {
         let color = colorIdx[f];
-        if(cli.flags.t) {
+        if(cli.flags.t && !cli.flags.m) {
             console.log(chalk[color](`> ${f}: `) + chalk.green('| ') +  chalk.white(`${l}`));
             console.log(chalk.green('-'.repeat(termSize)));
+        } else if (cli.flags.t && cli.flags.m) {
+            console.log(`> ${f}: | ${l}`);
+            console.log('-'.repeat(termSize));
+        } else if(cli.flags.m) {
+            console.log(`> ${f}: ${l}`);
         } else {
             console.log(chalk[color](`> ${f}: `) +  chalk.white(`${l}`));
         }

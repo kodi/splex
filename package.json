@@ -21,9 +21,10 @@
   "homepage": "https://github.com/kodi/splex#readme",
   "dependencies": {
     "chalk": "^2.4.2",
-    "faker": "^4.1.0",
-    "highland": "^2.13.5",
     "meow": "^5.0.0",
     "tail": "^2.0.3"
+  },
+  "devDependencies": {
+    "faker": "^4.1.0"
   }
 }
