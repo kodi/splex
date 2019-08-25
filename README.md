@@ -8,7 +8,14 @@
 
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
+## Instalation
 
+To install globally, do:
+```
+npm i -g splex
+```
+
+## What is Splex
 Need to watch 4 log files?
 
 Tired of doing `tail -f log.file` in 4 terminal panels/tabs/windows?
@@ -19,7 +26,7 @@ Enter **Splex**
 
 Splex is a streaming log multiplexer for node.
 
-Pass in multiple files as aguments, to watch streaming in real time
+Pass in multiple files as aguments, and watch them stream all at once in a single window, nicely color coded by log file, or even separated in table-like format for easier reading.
 
 Example commands
 
@@ -34,10 +41,3 @@ splex -t -c yellow,blue logs/log-0.log logs/log-1.log logs/log-2.log logs/log-3.
 
 ![custom colors](img/custom_colors.png)
 
-
-## Instalation
-
-To install globally, do:
-```
-npm i -g splex
-```
