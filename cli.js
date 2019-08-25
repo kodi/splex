@@ -7,7 +7,21 @@ const Tail = require('tail').Tail;
 
 // CLI Stuff
 const cli = meow(`
-Uage: test
+
+ _____        _           
+/ ____|      | |          
+| (___  _ __ | | _____  __
+\\___  \\| '_ \\| |/ _ \\ \\/ /
+ ____) | |_) | |  __/>  < 
+|_____/| .__/|_|\\___/_/\\_\\
+       | |                
+       |_|  
+
+Usage: 
+$ splex [options] file1 file 2 fileX
+
+Options:
+--table -t print as table rows
 `, {
     flags: {
         table: {
@@ -17,11 +31,15 @@ Uage: test
     }
 });
 
+if (cli.input.length === 0) {
+    console.log(chalk.red('Error:'), 'No files specified.');
+    console.log(chalk.yellow('Usage example:'),'splex [options] file1 file2 file3...');
+    cli.showHelp(2);
+}
 const termSize = process.stdout.columns;
-
+let filenames = cli.input;
 
 let listeners = {};
-
 let colors = [
     'red',
     'green',
@@ -31,7 +49,6 @@ let colors = [
     'cyan',
 ]
 
-let filenames = cli.input;
 
 
 // create index of fileName -> color
