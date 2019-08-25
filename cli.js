@@ -21,7 +21,11 @@ Options:
         table: {
             type: 'boolean',
             alias: 't'
-        }    
+        },
+        colors: {
+            type: 'string',
+            alias: 'c'
+        },   
     }
 });
 
@@ -43,6 +47,9 @@ let colors = [
     'cyan',
 ]
 
+if (cli.flags.c) {
+    colors = cli.flags.c.split(',');
+}
 
 // create index of fileName -> color
 let colorIdx = {};

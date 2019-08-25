@@ -27,6 +27,13 @@ Example commands
 splex log/path/log.1 log/path/log.2
 ```
 
+To specify custom colors
+```
+splex -t -c yellow,blue logs/log-0.log logs/log-1.log logs/log-2.log logs/log-3.log
+```
+
+![custom colors](https://previews.dropbox.com/p/thumb/AAiZNYy96uCY1WsmE5BWtWLCrv8oXLle6KSM1sEAj0IMZ1kkbFcF23kwVZGlhz47ZJGLearSZJU94rcE4pRdrNG_7X5ZpXt_pH-SKGRSv7Tv2kw-37flnO5FQWQsPuOPWGzAeKxJ3JVynizz63Awe0KXjGHv2jZmqz1VeoFHp9Jl7KoNxnSgKjqgHWSw3M_wVl0Ki3iyR5gHBNixc_0h1tk3ZbgKsQtUcSo4JLV_jt1Rj0FF7yxRPIosXYxLL8jCYSd6oXzdOstkY127cCtMsuGsbJ77un_UCODiPZQJnJjtSBp8H-Rv4bFSYyT9YsMIJd5B_AzOKQ0jgvbzuoFWZJE8VTnIakNhZheqVufLvztWOkBSlj5yI7SkbvQ2C5R8wQ5rR9NJi1pLjPKwCJ4jn9HiI9jPqcNy7sANuMRz20mkvw/p.png?fv_content=true&size_mode=5)
+
 
 ## Instalation
 
