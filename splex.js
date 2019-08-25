@@ -93,7 +93,7 @@ filenames.forEach(f => {
         break;
       case 4:
         // momno - no tables
-        monoPrint(f, l;
+        monoPrint(f, l);
         break;
       case 5:
         // mono - with tables
