@@ -28,6 +28,7 @@ Splex is a streaming log multiplexer for node.
 
 Pass in multiple files as aguments, and watch them stream all at once in a single window, nicely color coded by log file, or even separated in table-like format for easier reading.
 
+
 Example commands
 
 ```
