@@ -43,8 +43,8 @@ filenames.forEach((f, idx) => {
 
 
 console.log('-------------------');
-console.log('   Starting SpleX  ');
-console.log('------ 🦈🦈 ------');
+console.log('  Starting SpleX   ');
+console.log('----- 🦈  🦈 ------');
 
 filenames.forEach((f) => {
     listeners[f] = new Tail(f);
@@ -63,11 +63,10 @@ filenames.forEach((f) => {
 
 
     
-    
     listeners[f].on('eof', pos => console.log("Catched up to the last line") );
     listeners[f].on('error', err => console.log('Error: ', err));
     listeners[f].on('ready', fd => console.log('Ready to start on: ', fd));
-    console.log(chalk.blue('Setting up listener for: ') + f);
+    console.log(chalk[colorIdx[f]]('Setting up listener for: ') + f);
 });
 
 // wait in loop, until someone presses ctrl-c
