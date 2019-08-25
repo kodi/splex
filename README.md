@@ -34,8 +34,16 @@ Pass in multiple files as aguments, and watch them stream all at once in a singl
 Basic usage
 
 ```
-splex log/path/log.1 log/path/log.2
+splex logs/log-0.log logs/path/log.1 logs/path/log.2
 ```
+![custom colors](img/basic.png)
+
+To have a table-like interface, add `-t` flag:
+
+```
+splex -t logs/log-0.log logs/log-1.log logs/log-2.log
+```
+![custom colors](img/table.png)
 
 To specify custom colors, eg. alternating yellow and blue:
 ```
