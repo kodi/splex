@@ -3,6 +3,15 @@ const chalk = require('chalk');
 const meow = require('meow');
 const Tail = require('tail').Tail;
 
+const updateNotifier = require('update-notifier');
+const pkg = require('./package.json');
+
+// Checks for available update and returns an instance
+const notifier = updateNotifier({pkg});
+ 
+// Notify using the built-in convenience method
+notifier.notify();
+
 // CLI Stuff
 const cli = meow(
   `
@@ -92,13 +101,13 @@ filenames.forEach(f => {
         colorPrintTable(color, f, l);
         break;
       case 2: // Custom colors provided, print default
-        colorPrint(color, f, l);
+        splexPrint(colorPrint(color, f, l));
         break;
       case 4: // Mono - no tables, same as 6
       case 6:
         // Mono + custom colors, invalid combination,
         // just print mono
-        monoPrint(f, l);
+        splexPrint(monoPrint(f, l));
         break;
       case 5: // Mono - with tables, same as 7
       case 7:
@@ -118,7 +127,7 @@ filenames.forEach(f => {
 
 // Color print line, with table flag for tagle format
 let colorPrint = function (color, file, line) {
-  console.log(chalk[color](`> ${file}: `) + chalk.white(`${line}`));
+  return (chalk[color](`> ${file}: `) + chalk.white(`${line}`));
 };
 
 let colorPrintTable = function (color, file, line) {
@@ -128,13 +137,17 @@ let colorPrintTable = function (color, file, line) {
 
 // Mono print line with flag for table format
 let monoPrint = function (file, line) {
-  console.log(`> ${file}: ${line}`);
+  return (`> ${file}: ${line}`);
 };
 
 // Mono print line with flag for table format
 let monoPrintTable = function (file, line) {
   console.log(`> ${file}: | ${line}`);
   console.log(appOptions.term.line);
+};
+
+let splexPrint = function (line) {
+  console.log(line);
 };
 
 // Stuff that need to be re-calculated

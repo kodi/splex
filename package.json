@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint splex.js bin/producer.js",
     "lint-fix": "eslint --fix splex.js bin/producer.js",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "ava && npm lint"
   },
   "repository": {
     "type": "git",
@@ -27,9 +27,11 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "meow": "^5.0.0",
-    "tail": "^2.0.3"
+    "tail": "^2.0.3",
+    "update-notifier": "^3.0.1"
   },
   "devDependencies": {
+    "ava": "^2.3.0",
     "eslint": "^6.2.2",
     "eslint-config-xo-space": "^0.21.0",
     "faker": "^4.1.0",
