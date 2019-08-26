@@ -2,14 +2,14 @@
 const chalk = require('chalk');
 const meow = require('meow');
 const Tail = require('tail').Tail;
-const fs  = require('fs');
+const fs = require('fs');
 
 const updateNotifier = require('update-notifier');
 const pkg = require('./package.json');
 
 // Checks for available update and returns an instance
 const notifier = updateNotifier({pkg});
- 
+
 // Notify using the built-in convenience method
 notifier.notify();
 
@@ -62,25 +62,25 @@ wihout list of files provided
 );
 
 // ------------------------------------
-let testRcFile = function() {
+let testRcFile = function () {
   const path = process.cwd() + '/.splexrc.json';
   if (fs.existsSync(path)) {
     return true;
   }
-  return false;
-}
 
-let readRcFile = function() {
+  return false;
+};
+
+let readRcFile = function () {
   const path = process.cwd() + '/.splexrc.json';
   const raw = fs.readFileSync(path);
   return JSON.parse(raw);
-}
-
+};
 
 let filenames = cli.input;
 // Sanity checks
 if (cli.input.length === 0) {
-  if (testRcFile() !== false) {
+  if (testRcFile() === true) {
     console.log(chalk.blueBright('INFO: File names not provided, reading from .splexrc.json file'));
     let rcFIle = readRcFile();
     filenames = rcFIle.files;
@@ -203,7 +203,6 @@ let handleChange = function () {
   appOptions.term.size = process.stdout.columns;
   appOptions.term.line = '-'.repeat(process.stdout.columns);
 };
-
 
 // Wait in loop, until someone presses ctrl-c
 setInterval(() => {
