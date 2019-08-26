@@ -2,6 +2,7 @@
 const chalk = require('chalk');
 const meow = require('meow');
 const Tail = require('tail').Tail;
+const fs  = require('fs');
 
 const updateNotifier = require('update-notifier');
 const pkg = require('./package.json');
@@ -16,18 +17,38 @@ notifier.notify();
 const cli = meow(
   `
 ------------------
-
-S P L E X
-
+    S P L E X
 ------------------
 
+
 Usage: 
+------------------
 $ splex [options] file_1 file_2 file_X
 
 Options:
 --table       -t    print as table rows
 --colors      -c    specify custom colors as: -c color1,color2
 --monochrome  -m    monochrome mode
+
+
+Config file:
+------------------
+you can have per firectory config file with named .splexrc.json 
+with following content
+
+{
+  "files": [
+	  "logs/log-0.log",
+	  "logs/log-1.log",
+	  "logs/log-2.log",
+	  "logs/log-3.log"
+  ]	
+}
+
+if this file exist you can just run splex command, 
+wihout list of files provided
+
+
 `,
   {
     flags: {
@@ -38,14 +59,37 @@ Options:
   }
 );
 
+// ------------------------------------
+let testRcFile = function() {
+  const path = process.cwd() + '/.splexrc.json';
+  if (fs.existsSync(path)) {
+    return true;
+  }
+  return false;
+}
+
+let readRcFile = function() {
+  const path = process.cwd() + '/.splexrc.json';
+  const raw = fs.readFileSync(path);
+  return JSON.parse(raw);
+}
+
+
+let filenames = cli.input;
 // Sanity checks
 if (cli.input.length === 0) {
-  console.log(chalk.red('Error:'), 'No files specified.');
-  console.log(
-    chalk.yellow('Usage example:'),
-    'splex [options] file1 file2 file3...'
-  );
-  cli.showHelp(2);
+  if (testRcFile() !== false) {
+    console.log(chalk.blueBright('INFO: File names not provided, reading from .splexrc.json file'));
+    let rcFIle = readRcFile();
+    filenames = rcFIle.files;
+  } else {
+    console.log(chalk.red('Error:'), 'No files specified.');
+    console.log(
+      chalk.yellow('Usage example:'),
+      'splex [options] file1 file2 file3...'
+    );
+    cli.showHelp(2);
+  }
 }
 
 // Options handling
@@ -71,7 +115,6 @@ let appOptions = {
   colorIdx: {}
 };
 
-let filenames = cli.input;
 let listeners = {};
 
 // Provide custom colors
@@ -100,6 +143,7 @@ filenames.forEach(f => {
         // Custom colors + table
         colorPrintTable(color, f, l);
         break;
+      case 0: // No options provided
       case 2: // Custom colors provided, print default
         splexPrint(colorPrint(color, f, l));
         break;
@@ -152,10 +196,12 @@ let splexPrint = function (line) {
 
 // Stuff that need to be re-calculated
 // on term re-size
+// ------------------------------------
 let handleChange = function () {
   appOptions.term.size = process.stdout.columns;
   appOptions.term.line = '-'.repeat(process.stdout.columns);
 };
+
 
 // Wait in loop, until someone presses ctrl-c
 setInterval(() => {
