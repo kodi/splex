@@ -16,9 +16,11 @@ notifier.notify();
 // CLI Stuff
 const cli = meow(
   `
+==================
 ------------------
     S P L E X
 ------------------
+==================
 
 
 Usage: 
