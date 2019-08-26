@@ -59,3 +59,23 @@ Monochrome mode is activated by adding `-m`  flag:
 ```
 splex -tm logs/log-0.log logs/log-1.log logs/log-2.log
 ```
+
+
+## .splexrc.json - define list of files per folder
+ 
+typing `splex file_1 file_2 file_X` and then `log_2  log_3` in other folder can be tedious and quickly becomes painful and repetitive job.
+
+In order to make your life easier you can create `.splexrc.json` file in folder, with path relative to it, then `cd` into that folder and just type `splex`
+
+Here is example content of config file:
+
+```
+{
+  "files": [
+	  "logs/log-0.log",
+	  "logs/log-1.log",
+	  "logs/log-2.log",
+	  "logs/log-3.log"
+  ]	
+}
+```
