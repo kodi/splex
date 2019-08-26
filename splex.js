@@ -141,4 +141,4 @@ let monoPrintTable = function (file, line) {
 };
 
 // Wait in loop, until someone presses ctrl-c
-const x = setInterval(() => {}, 1000);
+setInterval(() => {}, 1000);

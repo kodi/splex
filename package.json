@@ -4,6 +4,8 @@
   "description": "Splex - Stream and view multiple files at once",
   "main": "cli.js",
   "scripts": {
+    "lint": "eslint splex.js bin/producer.js",
+    "lint-fix": "eslint --fix splex.js bin/producer.js",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "repository": {
