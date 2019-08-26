@@ -29,6 +29,17 @@ Options:
   }
 );
 
+// Sanity checks
+if (cli.input.length === 0) {
+  console.log(chalk.red('Error:'), 'No files specified.');
+  console.log(
+    chalk.yellow('Usage example:'),
+    'splex [options] file1 file2 file3...'
+  );
+  cli.showHelp(2);
+}
+
+// Options handling
 const optionsMap = {
   t: 1,
   c: 2,
@@ -42,31 +53,27 @@ let optionsSum = 0;
   }
 });
 
-// Sanity checks
-if (cli.input.length === 0) {
-  console.log(chalk.red('Error:'), 'No files specified.');
-  console.log(
-    chalk.yellow('Usage example:'),
-    'splex [options] file1 file2 file3...'
-  );
-  cli.showHelp(2);
-}
+let appOptions = {
+  term: {
+    size: process.stdout.columns,
+    line: '-'.repeat(process.stdout.columns)
+  },
+  colors: ['red', 'green', 'blue', 'yellow', 'magenta', 'cyan'],
+  colorIdx: {}
+};
 
-const termSize = process.stdout.columns;
 let filenames = cli.input;
 let listeners = {};
-let colors = ['red', 'green', 'blue', 'yellow', 'magenta', 'cyan'];
 
 // Provide custom colors
 if (cli.flags.c) {
-  colors = cli.flags.c.split(',');
+  appOptions.colors = cli.flags.c.split(',');
 }
 
 // Create index of fileName -> color
-let colorIdx = {};
 filenames.forEach((f, idx) => {
-  let cIdx = idx % colors.length;
-  colorIdx[f] = colors[cIdx];
+  let cIdx = idx % appOptions.colors.length;
+  appOptions.colorIdx[f] = appOptions.colors[cIdx];
 });
 
 // -------- START SPLEX -----------
@@ -77,33 +84,23 @@ console.log('----- 🦈  🦈 ------');
 filenames.forEach(f => {
   listeners[f] = new Tail(f);
   listeners[f].on('line', l => {
-    let color = colorIdx[f];
+    let color = appOptions.colorIdx[f];
     switch (optionsSum) {
-      case 1:
-        // Tables
-        colorPrintTable(color, f, l);
-        break;
-      case 2:
-        // Custom colors provided, print default
-        colorPrint(color, f, l);
-        break;
+      case 1: // Tables, same as 3
       case 3:
         // Custom colors + table
         colorPrintTable(color, f, l);
         break;
-      case 4:
-        // Momno - no tables
-        monoPrint(f, l);
+      case 2: // Custom colors provided, print default
+        colorPrint(color, f, l);
         break;
-      case 5:
-        // Mono - with tables
-        monoPrintTable(f, l);
-        break;
+      case 4: // Mono - no tables, same as 6
       case 6:
         // Mono + custom colors, invalid combination,
         // just print mono
         monoPrint(f, l);
         break;
+      case 5: // Mono - with tables, same as 7
       case 7:
         // Mono + table + custom colors
         // invalid combination, print mono table
@@ -116,7 +113,7 @@ filenames.forEach(f => {
   });
 
   listeners[f].on('error', err => console.log('Error: ', err));
-  console.log(chalk[colorIdx[f]]('Setting up listener for: ') + f);
+  console.log(chalk[appOptions.colorIdx[f]]('Setting up listener for: ') + f);
 });
 
 // Color print line, with table flag for tagle format
@@ -126,7 +123,7 @@ let colorPrint = function (color, file, line) {
 
 let colorPrintTable = function (color, file, line) {
   console.log(chalk[color](`> ${file}: `) + chalk.green('| ') + chalk.white(`${line}`));
-  console.log(chalk.green('-'.repeat(termSize)));
+  console.log(chalk.green(appOptions.term.line));
 };
 
 // Mono print line with flag for table format
@@ -137,8 +134,17 @@ let monoPrint = function (file, line) {
 // Mono print line with flag for table format
 let monoPrintTable = function (file, line) {
   console.log(`> ${file}: | ${line}`);
-  console.log('-'.repeat(termSize));
+  console.log(appOptions.term.line);
+};
+
+// Stuff that need to be re-calculated
+// on term re-size
+let handleChange = function () {
+  appOptions.term.size = process.stdout.columns;
+  appOptions.term.line = '-'.repeat(process.stdout.columns);
 };
 
 // Wait in loop, until someone presses ctrl-c
-setInterval(() => {}, 1000);
+setInterval(() => {
+  handleChange();
+}, 1000);
