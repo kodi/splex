@@ -22,12 +22,12 @@ S P L E X
 ------------------
 
 Usage: 
-$ splex [options] file1 file 2 fileX
+$ splex [options] file_1 file_2 file_X
 
 Options:
---table -t        | print as table rows
---colors -c       | specify custom colors as: color1, color2
---monochrome -m   | monochrome mode
+--table       -t    print as table rows
+--colors      -c    specify custom colors as: -c color1,color2
+--monochrome  -m    monochrome mode
 `,
   {
     flags: {
