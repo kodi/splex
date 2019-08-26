@@ -25,9 +25,9 @@ Usage:
 $ splex [options] file1 file 2 fileX
 
 Options:
---table -t        print as table rows
---colors -c       specify custom colors as: color1, color2
---monochrome -m   monochrome mode
+--table -t        | print as table rows
+--colors -c       | specify custom colors as: color1, color2
+--monochrome -m   | monochrome mode
 `,
   {
     flags: {
