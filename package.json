@@ -1,6 +1,6 @@
 {
   "name": "splex",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Splex - Stream and view multiple files at once",
   "main": "cli.js",
   "scripts": {
