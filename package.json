@@ -27,6 +27,7 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "meow": "^5.0.0",
+    "dot-prop": ">=4.2.1",
     "tail": "^2.0.3",
     "update-notifier": "^3.0.1"
   },
